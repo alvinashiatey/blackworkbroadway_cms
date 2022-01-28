@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "@/views/Home.vue";
 import Login from "@/views/Login.vue";
-import UserStore from "@/store/UserStore.js";
+import UserStore from "@/store/UserStore";
 
 const authenticationGuard = (to, from, next) => {
   UserStore.actions.checkLogin().then((res) => {
