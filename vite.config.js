@@ -1,17 +1,17 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
-import resolve from "@rollup/plugin-node-resolve";
-const path = require("path");
+import { nodeResolve } from "@rollup/plugin-node-resolve";
+const { resolve } = require("path");
 
 // https://vitejs.dev/config/
 export default defineConfig({
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      "@": resolve(__dirname, "./src"),
     },
   },
 
-  plugins: [vue(), resolve()],
+  plugins: [vue(), nodeResolve()],
   server: {
     port: 9090,
   },
