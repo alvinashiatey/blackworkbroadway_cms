@@ -10,8 +10,12 @@ export default defineConfig({
       "@": resolve(__dirname, "./src"),
     },
   },
-
-  plugins: [vue(), nodeResolve()],
+  plugins: [
+    vue(),
+    nodeResolve({
+      extensions: [".js", ".ts"],
+    }),
+  ],
   server: {
     port: 9090,
   },
