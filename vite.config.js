@@ -4,7 +4,6 @@ import resolve from "@rollup/plugin-node-resolve";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "/blackworkbroadway_cms/",
   resolve: {
     alias: {
       "@": resolve(__dirname, "./src"),
