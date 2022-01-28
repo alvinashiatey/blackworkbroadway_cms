@@ -26,8 +26,8 @@ import ModalUploadVue from "@/components/ModalUpload.vue";
 import ImageCapsuleVue from "@/components/ImageCapsule.vue";
 import NavBarVue from "@/components/NavBar.vue"
 import PlayVue from "@/components/Play.vue";
-import playStore from "@/store/playStore";
-import userStore from "@/store/userStore";
+import playStore from "@/store/playStore.js";
+import userStore from "@/store/userStore.js";
 import { provide, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 
