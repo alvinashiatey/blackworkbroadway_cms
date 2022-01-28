@@ -1,6 +1,6 @@
 {
         "compilerOptions": {
-                "baseUrl": "/blackworkbroadway_cms/",
+                "baseUrl": ".",
                 "paths": {
                         "@/*": [
                                 "./src/*"
