@@ -7,7 +7,7 @@ const { resolve } = require("path");
 export default defineConfig({
   resolve: {
     alias: {
-      "@": resolve("src/"),
+      "@": resolve(__dirname, "src/"),
     },
   },
   plugins: [
