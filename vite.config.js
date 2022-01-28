@@ -11,12 +11,7 @@ export default defineConfig({
     },
   },
 
-  plugins: [
-    vue(),
-    resolve({
-      extensions: [".js", ".ts"],
-    }),
-  ],
+  plugins: [vue(), resolve()],
   server: {
     port: 9090,
   },
