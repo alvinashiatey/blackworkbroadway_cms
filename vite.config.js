@@ -5,6 +5,7 @@ const { resolve } = require("path");
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: "/blackworkbroadway_cms/",
   resolve: {
     alias: {
       "@": resolve(__dirname, "./src"),
