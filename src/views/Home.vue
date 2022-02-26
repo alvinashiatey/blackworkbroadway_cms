@@ -148,11 +148,12 @@ export default {
         background-color: var(--primary-color);
         width: 100vw;
         height: 100%;
-        overflow: scroll;
+        overflow-y: scroll;
+        padding-right: 17px; /* Increase/decrease this value for cross-browser compatibility */
+        box-sizing: content-box; /* So the width will be 100% + 17px */
         position: relative;
         &.noFlow {
                 overflow: hidden;
-                background: tomato;
         }
 }
 </style>

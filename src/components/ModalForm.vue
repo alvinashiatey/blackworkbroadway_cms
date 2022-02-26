@@ -43,6 +43,7 @@
                                                         type="text"
                                                         id="title"
                                                         v-model.trim="data.title"
+                                                        autocomplete="on"
                                                         required
                                                 />
                                         </div>
@@ -54,6 +55,7 @@
                                                         id="year"
                                                         v-model.number="data.year"
                                                         @keypress="numbersOnly"
+                                                        autocomplete="on"
                                                         :maxlength="4"
                                                 />
                                         </div>
@@ -74,6 +76,7 @@
                                                         id="run"
                                                         v-model="data.run"
                                                         :maxlength="255"
+                                                        autocomplete="on"
                                                 />
                                         </div>
                                         <ArtistInput ref="artists" :data="artists" />
@@ -85,6 +88,7 @@
                                                         v-model="data.detail"
                                                         rows="8"
                                                         cols="50"
+                                                        autocomplete="on"
                                                 ></textarea>
                                         </div>
                                         <TagsInput ref="tags" :data="tags" />

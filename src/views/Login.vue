@@ -13,6 +13,7 @@
                                                                 class="form__input"
                                                                 placeholder="Email"
                                                                 v-model="data.email"
+                                                                autocomplete="on"
                                                         />
                                                 </div>
                                                 <div class="form__group">
@@ -21,6 +22,7 @@
                                                                 class="form__input"
                                                                 placeholder="Password"
                                                                 v-model="data.password"
+                                                                autocomplete="on"
                                                         />
                                                 </div>
                                                 <div class="form__group">
@@ -52,13 +54,20 @@ export default {
                 })
 
                 let login = () => {
-                        userStore.actions.login(data)
-                                .then(() => {
-                                        router.push({ name: 'Home' })
-                                })
-                                .catch(() => {
-                                        alert("Invalid credentials")
-                                })
+                        try {
+                                userStore.actions.login(data)
+                                        .then(() => {
+                                                router.push({ name: 'Home' })
+                                        })
+                                        .catch(() => {
+                                                document.querySelectorAll(".form__input").forEach(e => e.classList.add("error"))
+                                                alert("Invalid credentials")
+                                                document.querySelector("input[type=password]").value = ""
+                                        })
+                        } catch (e) {
+                                alert("Invalid credentials")
+                        }
+
                 }
 
                 onMounted(() => {
@@ -116,6 +125,14 @@ export default {
                                                 font-size: 14px;
                                                 &:focus {
                                                         outline: none;
+                                                }
+                                                &.error {
+                                                        border-color: rgba(
+                                                                255,
+                                                                0,
+                                                                0,
+                                                                0.5
+                                                        );
                                                 }
                                         }
                                         .btn {

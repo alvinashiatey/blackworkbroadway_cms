@@ -13,10 +13,11 @@ class UserService {
         return response.data.user;
       } else {
         console.log(response.message);
-        return null;
+        return False;
       }
     } catch (e) {
       console.log(e.response.data.message);
+      return False;
     }
   }
   logout() {

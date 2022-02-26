@@ -15,6 +15,7 @@
                                         v-model.trim="constributor.name"
                                         placeholder="NAME"
                                         :maxlength="255"
+                                        autocomplete="on"
                                 />
                                 <input
                                         class="form__input"
@@ -23,6 +24,7 @@
                                         v-model.trim="constributor.role"
                                         placeholder="ROLE"
                                         :maxlength="255"
+                                        autocomplete="on"
                                 />
                         </div>
                 </div>

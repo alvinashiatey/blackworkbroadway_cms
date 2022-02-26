@@ -82,7 +82,7 @@ export default {
                 onMounted(() => {
                         hoveredPlay.value.addEventListener('mouseenter', () => {
                                 imageData.images = props.play.images;
-                                if (imageData.images.length) imageData.show = true;
+                                if (imageData.images?.length) imageData.show = true;
                         })
                         hoveredPlay.value.addEventListener('mouseleave', () => {
                                 imageData.show = false;

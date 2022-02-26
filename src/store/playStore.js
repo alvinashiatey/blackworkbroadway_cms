@@ -15,25 +15,33 @@ const methods = {
   },
 
   appendPlay(play) {
-    return state.plays.push(play);
+    state.plays.push(play);
+    state.filtered = state.plays;
+    return state.filtered;
   },
 
   updatePlay(data) {
     const index = state.plays.findIndex((p) => p.uuid === data.play.uuid);
-    return (state.plays[index] = {
+    (state.plays[index] = {
       ...data.play,
       artists: data.artists,
       tags: data.tags,
     });
+    state.filtered = state.plays;
+    return state.filtered;
   },
 
   deletePlay(data) {
-    return (state.plays = state.plays.filter((p) => p.uuid !== data.uuid));
+    (state.plays = state.plays.filter((p) => p.uuid !== data.uuid));
+    state.filtered = state.plays;
+    return state.filtered;
   },
 
   //Media
   appendMedia(media, uuid) {
-    return state.plays.find((play) => play.uuid === uuid).images.push(media);
+    state.plays.find((play) => play.uuid === uuid).images.push(media);
+    state.filtered = state.plays;
+    return state.filtered;
   },
 
   updateMedia(media, uuid) {
@@ -44,13 +52,15 @@ const methods = {
         image.caption = media.caption;
       }
     });
-    return play;
+    state.filtered = state.plays;
+    return state.filtered;
   },
 
   deleteMedia(media, uuid) {
     const play = state.plays.find((p) => p.uuid === uuid);
     play.images = play.images.filter((image) => image.uuid !== media.uuid);
-    return play;
+    state.filtered = state.plays;
+    return state.filtered;
   },
 };
 
