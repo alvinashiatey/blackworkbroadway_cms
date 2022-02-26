@@ -5,14 +5,13 @@
                                 <form @submit.prevent>
                                         <div class="login__header">
                                                 <h3>Login</h3>
-                                                <p>Please enter your credentials to login.</p>
                                         </div>
                                         <div class="login__form">
                                                 <div class="form__group">
                                                         <input
                                                                 type="text"
                                                                 class="form__input"
-                                                                placeholder="email"
+                                                                placeholder="Email"
                                                                 v-model="data.email"
                                                         />
                                                 </div>
@@ -79,3 +78,74 @@ export default {
         }
 }
 </script>
+
+<style lang="scss" scoped>
+.login {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        .login__wrapper {
+                width: 400px;
+                padding: 20px;
+                border-radius: 5px;
+                background-color: #fff;
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+                .login__container {
+                        padding: 20px;
+                        text-align: center;
+                        .login__header {
+                                h3 {
+                                        font-size: 24px;
+                                        margin-bottom: 20px;
+                                }
+                                p {
+                                        font-size: 14px;
+                                        margin-bottom: 20px;
+                                }
+                        }
+                        .login__form {
+                                .form__group {
+                                        padding-block-start: 0.5rem;
+                                        .form__input {
+                                                width: 100%;
+                                                border: 1px solid #ddd;
+                                                border-radius: 5px;
+                                                padding: 10px;
+                                                font-size: 14px;
+                                                &:focus {
+                                                        outline: none;
+                                                }
+                                        }
+                                        .btn {
+                                                width: 100%;
+                                                border: none;
+                                                border-radius: 5px;
+                                                padding: 10px;
+                                                font-size: 14px;
+                                                background-color: var(
+                                                        --primary-color
+                                                );
+                                                transition: all 0.3s ease-in-out;
+                                                &:hover {
+                                                        cursor: pointer;
+                                                        filter: brightness(120%)
+                                                                drop-shadow(
+                                                                        0 1px
+                                                                                1px
+                                                                                var(
+                                                                                        --primary-color
+                                                                                )
+                                                                );
+                                                }
+                                                &:focus {
+                                                        outline: none;
+                                                }
+                                        }
+                                }
+                        }
+                }
+        }
+}
+</style>

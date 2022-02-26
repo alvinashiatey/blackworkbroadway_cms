@@ -1,6 +1,6 @@
 /* Box sizing rules */
 :root {
-  --font-size: 1rem;
+  --font-size: 1.1rem;
   --font-size-lg: 1.35rem;
   --font-size-xlg: 2.64rem;
   --primary-color: #d1bd98;
@@ -46,6 +46,8 @@ body {
   text-rendering: optimizeSpeed;
   line-height: 1.5;
   background-color: var(--primary-color);
+  font-family: freight-sans-pro, sans-serif;
+  font-size: var(--font-size);
   // position: relative;
 }
 

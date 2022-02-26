@@ -3,7 +3,10 @@
                 <div class="nav__container">
                         <div class="nav__wrapper">
                                 <div class="title">
-                                        <a class="brand-logo">Black Work Broadway</a>
+                                        <a class="brand-logo">
+                                                Black Work
+                                                <br />Broadway
+                                        </a>
                                 </div>
                                 <div @click="addField" class="add__btn">
                                         <p>✚</p>
@@ -106,6 +109,9 @@ nav {
                         .brand-logo {
                                 font-size: 2em;
                                 font-weight: bold;
+                                text-transform: uppercase;
+                                line-height: 0.875em;
+                                font-size: 2.5rem;
                         }
                         .add__btn {
                                 font-size: var(--font-size-lg);

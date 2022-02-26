@@ -257,12 +257,20 @@ export default {
                                 color: #d0cab2;
                                 &:hover {
                                         cursor: pointer;
-                                        filter: brightness(1.2);
+                                        filter: brightness(1.2)
+                                                drop-shadow(
+                                                        0 0.06rem 0.07rem
+                                                                rgba(
+                                                                        0,
+                                                                        0,
+                                                                        0,
+                                                                        0.3
+                                                                )
+                                                );
                                 }
                                 width: 100%;
                                 padding: 0.5rem;
                                 border: 0;
-                                border-bottom: 1px solid #d0cab2;
                                 font-size: var(--font-size);
                                 &:focus {
                                         outline: none;
@@ -275,7 +283,17 @@ export default {
                                         filter: contrast(6.2);
                                         transition: all 0.2s ease-in-out;
                                         &:hover {
-                                                cursor: pointer;
+                                                filter: contrast(8)
+                                                        drop-shadow(
+                                                                0 0.06rem
+                                                                        0.07rem
+                                                                        rgba(
+                                                                                0,
+                                                                                0,
+                                                                                0,
+                                                                                0.3
+                                                                        )
+                                                        );
                                         }
                                 }
                         }
