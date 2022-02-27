@@ -4,6 +4,7 @@
                         @addField="handleAddbutton"
                         @logout="handleLogout"
                         :total="playStore.getters.total()"
+                        ref="navbar"
                 />
                 <div :class="data.classObject">
                         <ModalFormVue v-if="data.showModal" :data="data.editData" />
@@ -32,7 +33,7 @@ import NavBarVue from "@/components/NavBar.vue"
 import PlayVue from "@/components/Play.vue";
 import playStore from "@/store/playStore.js";
 import userStore from "@/store/userStore.js";
-import { provide, reactive } from 'vue';
+import { provide, reactive, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 export default {
@@ -46,6 +47,7 @@ export default {
         setup() {
                 playStore.actions.fetchPlays();
                 const router = useRouter();
+                const navbar = ref(null);
                 let data = reactive({
                         showModal: false,
                         showUpload: false,
@@ -124,10 +126,16 @@ export default {
                         }
                 }
 
+                onMounted(() => {
+                        console.log(navbar.value.data.sortBy);
+                });
+
                 provide('playStore', playStore);
                 provide('imageData', imageData);
+                provide('navbar', navbar);
                 return {
                         data,
+                        navbar,
                         playStore,
                         imageData,
                         handleEdit,

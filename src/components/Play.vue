@@ -56,6 +56,7 @@ export default {
         setup(props, { emit }) {
                 const playStore = inject('playStore')
                 const imageData = inject('imageData')
+                const navbar = inject("navbar");
                 const hoveredPlay = ref(null)
                 const mediaButtonText = ref("Upload Media")
                 watchEffect(() => {
@@ -69,7 +70,10 @@ export default {
                 const deletePlay = (play) => {
                         let del = confirm('Are you sure you want to delete this play?')
                         if (del) {
-                                playStore.actions.deletePlay(play)
+                                playStore.actions.deletePlay(play).then(() => {
+                                        if (!navbar.value.data.sortBy) return;
+                                        playStore.actions.sortPlay(navbar.value.data.sortBy)
+                                });
                         } else {
                                 alert('Delete cancelled')
                         }

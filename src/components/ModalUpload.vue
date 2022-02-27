@@ -103,6 +103,7 @@ export default {
         setup(props) {
                 const apiURL = import.meta.env.VITE_API_URL;
                 const playStore = inject("playStore");
+                const navbar = inject("navbar");
                 const fileInput = ref(null);
                 const imagePreview = ref(null);
                 const imageUUID = ref(null);
@@ -144,7 +145,10 @@ export default {
                         if (data.formData) {
                                 data.formData.append("alttext", data.alttext);
                                 data.formData.append("caption", data.caption);
-                                playStore.actions.uploadMedia(data.formData, data.play_id);
+                                playStore.actions.uploadMedia(data.formData, data.play_id).then(() => {
+                                        if (!navbar.value.data.sortBy) return;
+                                        playStore.actions.sortPlay(navbar.value.data.sortBy)
+                                });;
                                 props.data.save();
                         }
                 }
@@ -160,7 +164,10 @@ export default {
                                         alttext: data.alttext,
                                         caption: data.caption,
                                 }
-                                await playStore.actions.updateMedia(d, imageUUID.value, data.play_id);
+                                playStore.actions.updateMedia(d, imageUUID.value, data.play_id).then(() => {
+                                        if (!navbar.value.data.sortBy) return;
+                                        playStore.actions.sortPlay(navbar.value.data.sortBy)
+                                });;
                         } catch (e) {
                                 console.log(e.message);
                         }
@@ -180,7 +187,10 @@ export default {
                 }
 
                 const handleDeleteImage = uuid => {
-                        confirm("Are you sure you want to delete this image?") && playStore.actions.deleteMedia(uuid, data.play_id);
+                        confirm("Are you sure you want to delete this image?") && playStore.actions.deleteMedia(uuid, data.play_id).then(() => {
+                                if (!navbar.value.data.sortBy) return;
+                                playStore.actions.sortPlay(navbar.value.data.sortBy)
+                        });;
                         props.data.cancel();
                 }
 

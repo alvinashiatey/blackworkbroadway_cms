@@ -113,6 +113,7 @@ export default {
         props: ["data"],
         setup(props) {
                 const playStore = inject("playStore");
+                const navbar = inject("navbar");
                 let artists = ref([]);
                 let buttonText = ref("Submit");
                 let tags = ref([]);
@@ -145,13 +146,19 @@ export default {
 
                 const submitPlay = async () => {
                         let d = sendData();
-                        return playStore.actions.createPlay(d);
+                        playStore.actions.createPlay(d).then(() => {
+                                if (!navbar.value.data.sortBy) return;
+                                playStore.actions.sortPlay(navbar.value.data.sortBy)
+                        });
                 };
 
                 const updatePlay = async () => {
                         let d = sendData();
                         d.play.uuid = props.data.item.uuid;
-                        return playStore.actions.updatePlay(d, props.data.item.uuid);
+                        playStore.actions.updatePlay(d, props.data.item.uuid).then(() => {
+                                if (!navbar.value.data.sortBy) return;
+                                playStore.actions.sortPlay(navbar.value.data.sortBy)
+                        });
                 };
 
                 const numbersOnly = (e) => {
