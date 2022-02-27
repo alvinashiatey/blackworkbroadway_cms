@@ -41,7 +41,7 @@ export default {
 <style lang="scss" scoped>
 .image__container {
   position: fixed;
-  width: 45vmin;
+  width: 40vmin;
   height: auto;
   bottom: 0;
   right: 0;
