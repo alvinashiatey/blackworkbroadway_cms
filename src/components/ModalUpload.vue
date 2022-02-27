@@ -206,7 +206,6 @@ export default {
           data.buttonText = "Update";
         }
       }
-      console.log(apiURL);
     });
 
     return {
@@ -264,7 +263,7 @@ export default {
       gap: 1em;
       width: 100%;
       height: 100%;
-      overflow-y: scroll;
+      // overflow-y: scroll;
       .image {
         &__wrapper {
           .delete__button {
