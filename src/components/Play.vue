@@ -7,10 +7,10 @@
                                         <p>{{ play.run }}</p>
                                 </div>
                                 <div class="play__artists col">
-                                        <p
-                                                v-for="artist in play.artists"
-                                                :key="artist.uuid"
-                                        >{{ artist.name }} ({{ artist.role }})</p>
+                                        <p v-for="artist in play.artists" :key="artist.uuid">
+                                                {{ artist.name }}
+                                                <span v-if="artist.role">({{ artist.role }})</span>
+                                        </p>
                                 </div>
                                 <div class="play__detail col">
                                         <div class="detail">
