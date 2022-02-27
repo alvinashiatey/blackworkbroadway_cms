@@ -93,7 +93,6 @@ const actions = {
       console.log(err.message);
     }
   },
-
   async deletePlay(play) {
     try {
       await PlayService.deletePlay(play.uuid);
@@ -102,7 +101,6 @@ const actions = {
       console.log(err.message);
     }
   },
-
   searchPlay(value = null) {
     if (value === "" || value === " " || value === null) {
       return (state.filtered = state.plays);
@@ -125,7 +123,9 @@ const actions = {
         })
       );
     });
-    return state.filtered;
+    return state.filtered.sort((a, b) => {
+      return a.title.localeCompare(b.title);
+    });
   },
 
   sortPlay(sortBy) {

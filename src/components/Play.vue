@@ -9,12 +9,18 @@
                                 <div class="play__artists col">
                                         <p v-for="artist in play.artists" :key="artist.uuid">
                                                 {{ artist.name }}
-                                                <span v-if="artist.role">({{ artist.role }})</span>
+                                                <span
+                                                        v-if="artist.role"
+                                                >({{ artist.role }})</span>
                                         </p>
                                 </div>
                                 <div class="play__detail col">
                                         <div class="detail">
-                                                <p>{{ play.detail }}</p>
+                                                <p>{{ detail.content }}</p>
+                                                <a
+                                                        v-if="detail.isLong"
+                                                        @click.prevent="handlePlayDetails"
+                                                >({{ lessMore }})</a>
                                         </div>
                                         <div class="tags">
                                                 <p
@@ -59,6 +65,12 @@ export default {
                 const navbar = inject("navbar");
                 const hoveredPlay = ref(null)
                 const mediaButtonText = ref("Upload Media")
+                const lessMore = ref("More")
+                const detail = ref({
+                        isLong: props.play.detail.length > 250,
+                        detail: props.play.detail,
+                        subDetail: `${props.play.detail.slice(0, 250)} ...`,
+                })
                 watchEffect(() => {
                         props.play.images?.length ? mediaButtonText.value = "Edit Media" : mediaButtonText.value = "Upload Media";
                 })
@@ -83,6 +95,15 @@ export default {
                         emit("upload", props.play.uuid, props.play.images)
                 }
 
+                const handlePlayDetails = () => {
+                        lessMore.value = lessMore.value === "More" ? "Less" : "More"
+                        if (lessMore.value === "More") {
+                                detail.value.content = detail.value.subDetail
+                        } else {
+                                detail.value.content = detail.value.detail
+                        }
+                }
+
                 onMounted(() => {
                         hoveredPlay.value.addEventListener('mouseenter', () => {
                                 imageData.images = props.play.images;
@@ -91,14 +112,18 @@ export default {
                         hoveredPlay.value.addEventListener('mouseleave', () => {
                                 imageData.show = false;
                         })
+                        detail.value.isLong ? detail.value.content = detail.value.subDetail : detail.value.content = detail.value.detail
                 })
 
                 return {
+                        detail,
+                        lessMore,
                         hoveredPlay,
                         mediaButtonText,
                         editPlay,
                         deletePlay,
-                        handleImageUpload
+                        handleImageUpload,
+                        handlePlayDetails
                 }
 
         }
@@ -147,6 +172,18 @@ export default {
                                                 text-transform: capitalize;
                                         }
                                 }
+
+                                a {
+                                        cursor: pointer;
+                                        transition: all 0.3s ease-in-out;
+                                        display: inline;
+                                        transition: all 0.3s ease-in-out;
+                                        font-style: italic;
+                                        color: olivedrab;
+                                        &:hover {
+                                                text-decoration: underline;
+                                        }
+                                }
                         }
                 }
                 .btns__container {
@@ -155,6 +192,7 @@ export default {
                         padding-inline: 1rem;
                         .play__btns {
                                 a {
+                                        color: olivedrab;
                                         &:hover {
                                                 cursor: pointer;
                                         }
