@@ -47,6 +47,9 @@
                                                         </select>
                                                 </div>
                                         </div>
+                                        <div class="entry__count">
+                                                <div class="total">Entries: {{ data.total }}</div>
+                                        </div>
                                 </div>
                         </div>
                 </div>
@@ -55,7 +58,7 @@
 
 <script>
 import { reactive } from '@vue/reactivity'
-import { inject, watchEffect } from '@vue/runtime-core'
+import { inject, onMounted } from '@vue/runtime-core'
 export default {
         name: 'NavBar',
         emits: ['addField', 'logout'],
@@ -82,6 +85,10 @@ export default {
                 const onChange = () => {
                         playStore.actions.searchPlay(data.search);
                 }
+
+                onMounted(() => {
+                        data.total = playStore.state.plays.length;
+                })
 
                 return {
                         data,
@@ -182,6 +189,8 @@ nav {
                         padding-inline: var(--padding-inline);
                         .nav-sort__container {
                                 padding-block: 0.5rem;
+                                display: flex;
+                                justify-content: space-between;
                                 .sort {
                                         width: 80%;
                                         display: flex;
