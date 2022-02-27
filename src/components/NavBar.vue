@@ -48,7 +48,7 @@
                                                 </div>
                                         </div>
                                         <div class="entry__count">
-                                                <div class="total">Entries: {{ data.total }}</div>
+                                                <div class="total">Entries: {{ total }}</div>
                                         </div>
                                 </div>
                         </div>
@@ -58,10 +58,11 @@
 
 <script>
 import { reactive } from '@vue/reactivity'
-import { inject, onMounted } from '@vue/runtime-core'
+import { inject } from '@vue/runtime-core'
 export default {
         name: 'NavBar',
         emits: ['addField', 'logout'],
+        props: ['total'],
         setup(props, { emit }) {
                 const data = reactive({
                         search: "",
@@ -85,10 +86,6 @@ export default {
                 const onChange = () => {
                         playStore.actions.searchPlay(data.search);
                 }
-
-                onMounted(() => {
-                        data.total = playStore.state.plays.length;
-                })
 
                 return {
                         data,

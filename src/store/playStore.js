@@ -186,6 +186,11 @@ const getters = {
       });
     }
   },
+  total: () => {
+    if (state.plays.length > 0) {
+      return state.plays.length;
+    }
+  }
 };
 
 export default {

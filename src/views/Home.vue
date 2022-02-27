@@ -1,6 +1,10 @@
 <template>
         <div class="wrapper">
-                <NavBarVue @addField="handleAddbutton" @logout="handleLogout" />
+                <NavBarVue
+                        @addField="handleAddbutton"
+                        @logout="handleLogout"
+                        :total="playStore.getters.total()"
+                />
                 <div :class="data.classObject">
                         <ModalFormVue v-if="data.showModal" :data="data.editData" />
                         <ModalUploadVue v-if="data.showUpload" :data="data.uploadData" />
