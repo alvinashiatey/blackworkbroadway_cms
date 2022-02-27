@@ -155,5 +155,8 @@ export default {
         &.noFlow {
                 overflow: hidden;
         }
+        .home__container {
+                width: 100vw;
+        }
 }
 </style>
