@@ -232,7 +232,7 @@ export default {
         letter-spacing: 0.08rem;
         position: absolute;
         inset: 0;
-        overflow: scroll;
+        overflow-y: scroll;
         &__container {
                 margin: 0 auto;
                 width: 40rem;
@@ -245,7 +245,7 @@ export default {
                 align-items: center;
                 flex-direction: column;
                 gap: 1em;
-                height: 84vh;
+                height: auto;
                 width: 40rem;
                 padding-block-start: 2em;
                 @media screen and (max-width: 60em) {

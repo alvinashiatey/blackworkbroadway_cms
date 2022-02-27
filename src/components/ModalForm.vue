@@ -246,7 +246,7 @@ export default {
         font-size: var(--font-size);
         position: absolute;
         inset: 0;
-        overflow: scroll;
+        overflow-y: scroll;
         .form__body {
                 margin: 0 auto;
                 width: 40rem;
