@@ -123,9 +123,7 @@ const actions = {
         })
       );
     });
-    return state.filtered.sort((a, b) => {
-      return a.title.localeCompare(b.title);
-    });
+    return state.filtered
   },
 
   sortPlay(sortBy) {

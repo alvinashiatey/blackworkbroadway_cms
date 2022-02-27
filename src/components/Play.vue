@@ -179,9 +179,11 @@ export default {
                                         display: inline;
                                         transition: all 0.3s ease-in-out;
                                         font-style: italic;
-                                        color: olivedrab;
+                                        background: black;
+                                        color: var(--primary-color);
                                         &:hover {
-                                                text-decoration: underline;
+                                                color: var(--secondary-color);
+                                                background: none;
                                         }
                                 }
                         }
@@ -192,9 +194,12 @@ export default {
                         padding-inline: 1rem;
                         .play__btns {
                                 a {
-                                        color: olivedrab;
+                                        background: black;
+                                        color: var(--primary-color);
+                                        cursor: pointer;
                                         &:hover {
-                                                cursor: pointer;
+                                                color: var(--secondary-color);
+                                                background: none;
                                         }
                                 }
                         }
