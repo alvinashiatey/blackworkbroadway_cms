@@ -139,7 +139,7 @@ export default {
                                 detail: data.detail,
                                 state: data.state,
                         },
-                        artists: artists.value.data.contributors,
+                        artists: artists.value.data.contributors[0].name !== '' ? artists.value.data.contributors : [],
                         tags: tags.value.data.tags,
                 });
 
