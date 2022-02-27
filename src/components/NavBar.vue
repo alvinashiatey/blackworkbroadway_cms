@@ -59,6 +59,7 @@
 <script>
 import { reactive } from '@vue/reactivity'
 import { inject } from '@vue/runtime-core'
+import { onUpdated } from 'vue'
 export default {
         name: 'NavBar',
         emits: ['addField', 'logout'],
@@ -86,6 +87,12 @@ export default {
                 const onChange = () => {
                         playStore.actions.searchPlay(data.search);
                 }
+
+                onUpdated(() => {
+                        if (data.sortBy) {
+                                playStore.actions.sortPlay(data.sortBy.toLowerCase())
+                        }
+                })
 
                 return {
                         data,
