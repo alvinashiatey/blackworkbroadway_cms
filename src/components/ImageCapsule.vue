@@ -29,8 +29,7 @@ export default {
         if (imageContainer == null) return;
         // position the image__container to the center of the mouse.
         imageContainer.style.left = e.clientX + "px";
-        imageContainer.style.top = `${e.clientY -
-          imageContainer.offsetHeight / 2}px`;
+        imageContainer.style.top = `${e.clientY / 2}px`;
       });
     });
     return {
