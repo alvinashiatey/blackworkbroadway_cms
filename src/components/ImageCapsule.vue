@@ -27,8 +27,10 @@ export default {
       document.body.addEventListener("mousemove", (e) => {
         const imageContainer = document.querySelector(".image__container");
         if (imageContainer == null) return;
+        // position the image__container to the center of the mouse.
         imageContainer.style.left = e.clientX + "px";
-        imageContainer.style.top = e.clientY + "px";
+        imageContainer.style.top = `${e.clientY -
+          imageContainer.offsetHeight / 2}px`;
       });
     });
     return {
