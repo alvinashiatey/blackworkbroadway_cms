@@ -2,12 +2,15 @@
   <div class="upload">
     <div class="upload__container">
       <div class="upload__wrapper">
-        <div class="images">
-          <div
-            class="image"
-            v-for="(image, index) in data.images"
-            :key="image.uuid"
-          >
+        <div
+          @dragenter.prevent="toggleActive"
+          @dragleave.prevent="toggleActive"
+          @dragover.prevent
+          @drop.prevent="handleDragDrop"
+          :class="{ 'active-dropzone': active, 'notactive': imagePreview }"
+          class="images"
+        >
+          <div class="image" v-for="(image, index) in data.images" :key="image.uuid">
             <div class="image__wrapper" ref="imageRef" :data-key="index">
               <div class="delete__button">
                 <p @click="handleDeleteImage(image.uuid)">✖︎</p>
@@ -20,9 +23,7 @@
                   contenteditable="true"
                   class="caption__text"
                   :data-key="index"
-                >
-                  {{ image.caption }}
-                </p>
+                >{{ image.caption }}</p>
               </div>
               <div class="alttext">
                 <p>Alt-Text:</p>
@@ -31,9 +32,7 @@
                   contenteditable="true"
                   class="alt__text"
                   :data-key="index"
-                >
-                  {{ image.alttext }}
-                </p>
+                >{{ image.alttext }}</p>
               </div>
             </div>
           </div>
@@ -41,7 +40,7 @@
         <div v-if="imagePreview" class="preview__window">
           <div class="preview__wrapper">
             <div class="preview__image">
-              <img :src="imagePreview" alt />
+              <img :src="imagePreview" alt="preview uploaded image" />
             </div>
             <div class="input__container">
               <div class="form__group alt__text">
@@ -71,13 +70,7 @@
             <button @click="handleUpload">{{ data.buttonText }}</button>
           </div>
           <div class="cancel__btn">
-            <button
-              class="form__button cancel"
-              type="button"
-              @click="handleCancel"
-            >
-              Cancel
-            </button>
+            <button class="form__button cancel" type="button" @click="handleCancel">Cancel</button>
           </div>
         </div>
       </div>
@@ -101,6 +94,10 @@ export default {
     const imagePreview = ref(null);
     const imageUUID = ref(null);
     const imageRef = ref(null);
+    const active = ref(false);
+    const toggleActive = () => {
+      active.value = !active.value;
+    };
 
     let data = reactive({
       images: [],
@@ -121,8 +118,21 @@ export default {
       "video/ogg",
       "video/quicktime",
     ];
+
     const handleImageUpload = () => {
       const file = fileInput.value.files[0];
+      if (file && imageTypes.includes(file.type)) {
+        data.formData = new FormData();
+        data.formData.append("file", file);
+        data.formData.append("play_id", data.play_id);
+        imagePreview.value = URL.createObjectURL(file);
+      }
+    };
+
+    const handleDragDrop = (e) => {
+      toggleActive();
+      console.log("here")
+      const file = e.dataTransfer.files[0];
       if (file && imageTypes.includes(file.type)) {
         data.formData = new FormData();
         data.formData.append("file", file);
@@ -211,13 +221,16 @@ export default {
     return {
       data,
       apiURL,
+      active,
       imageRef,
       fileInput,
       imagePreview,
+      toggleActive,
       getImageUUID,
       handleCancel,
       handleUpload,
       handleSubmit,
+      handleDragDrop,
       handleImageUpload,
       handleDeleteImage,
     };
@@ -262,7 +275,28 @@ export default {
       flex-wrap: wrap;
       gap: 1em;
       width: 100%;
+      min-height: 40vh;
       height: 100%;
+      background-color: var(--primary-color);
+      filter: saturate(0.5);
+      &.active-dropzone {
+        background-color: var(--primary-color);
+        border: 1px dashed var(--black-color);
+        position: relative;
+        &::before {
+          content: "Drop Image Here";
+          position: absolute;
+          inset: 0;
+          widows: 100%;
+          height: 100%;
+          text-align: center;
+          line-height: 2em;
+        }
+      }
+      &.notactive {
+        min-height: 0 !important;
+        height: 100% !important;
+      }
       // overflow-y: scroll;
       .image {
         &__wrapper {
@@ -305,10 +339,13 @@ export default {
     }
     .preview__window {
       width: inherit;
+      min-height: 40rem;
+      height: auto;
       .preview__wrapper {
         width: inherit;
         .preview__image {
           width: 100%;
+
           img {
             height: 100%;
           }
