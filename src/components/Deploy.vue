@@ -80,19 +80,10 @@ export default {
         }
         @keyframes move {
                 0% {
-                        transform: translateY(0);
+                        transform: translateX(0);
                 }
                 100% {
-                        transform: translateY(100%);
-                }
-        }
-
-        @keyframes show {
-                from {
-                        transform: translateY(100%);
-                }
-                to {
-                        transform: translateY(0);
+                        transform: translateX(100%);
                 }
         }
 }
