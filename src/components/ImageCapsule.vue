@@ -3,7 +3,7 @@
     <div class="images">
       <div v-for="img in images" :key="img.uuid" class="image">
         <img :src="apiURL + img.path" :alt="img.alttext" />
-        <pre>{{ img.caption }}</pre>
+        <p>{{ img.caption }}</p>
       </div>
     </div>
   </div>
