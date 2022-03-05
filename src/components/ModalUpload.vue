@@ -13,7 +13,7 @@
           <div class="image" v-for="(image, index) in data.images" :key="image.uuid">
             <div class="image__wrapper" ref="imageRef" :data-key="index">
               <div class="delete__button">
-                <p @click="handleDeleteImage(image.uuid)">✖Delete</p>
+                <p @click="handleDeleteImage(image.uuid)">Delete</p>
               </div>
               <img :src="apiURL + image.path" :alt="image.alttext" />
               <div class="caption">
@@ -303,6 +303,8 @@ export default {
         &__wrapper {
           .delete__button {
             text-align: right;
+            font-weight: normal;
+            direction: rtl;
             p {
               cursor: pointer;
               font-size: 1.5rem;
