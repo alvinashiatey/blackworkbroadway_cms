@@ -22,10 +22,12 @@
                                 <ImageCapsuleVue :images="imageData.images" v-if="imageData.show" />
                         </div>
                 </div>
+                <PublishVue :updated="data.updated" />
         </div>
 </template>
 
 <script>
+import PublishVue from '@/components/Deploy.vue';
 import ModalFormVue from "@/components/ModalForm.vue";
 import ModalUploadVue from "@/components/ModalUpload.vue";
 import ImageCapsuleVue from "@/components/ImageCapsule.vue";
@@ -40,6 +42,7 @@ export default {
         components: {
                 PlayVue,
                 NavBarVue,
+                PublishVue,
                 ModalFormVue,
                 ModalUploadVue,
                 ImageCapsuleVue,
@@ -62,6 +65,8 @@ export default {
                                 "home": true,
                                 "noFlow": false
                         },
+                        updated: false,
+                        updateData: {}
                 });
 
                 let imageData = reactive({
@@ -83,11 +88,17 @@ export default {
                 data.uploadData.save = () => {
                         data.showUpload = false;
                         data.classObject.noFlow = false
+                        data.updated = true;
                 }
 
                 data.editData.save = () => {
                         data.showModal = false;
                         data.classObject.noFlow = false
+                        data.updated = true;
+                }
+
+                data.updateData.save = () => {
+                        data.updated = true;
                 }
 
                 const handleEdit = (d) => {
@@ -129,11 +140,12 @@ export default {
                 provide('playStore', playStore);
                 provide('imageData', imageData);
                 provide('navbar', navbar);
+                provide('update', data.updateData.save);
                 return {
                         data,
                         navbar,
-                        playStore,
                         imageData,
+                        playStore,
                         handleEdit,
                         handleLogout,
                         handleUpload,

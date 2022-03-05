@@ -1,6 +1,7 @@
 import { reactive, readonly } from "vue";
-import PlayService from "../services/PlayService";
-import ImageService from "../services/ImageService";
+import PlayService from "@/services/PlayService";
+import ImageService from "@/services/ImageService";
+import DeployService from "@/services/DeployService";
 
 const state = reactive({
   plays: [],
@@ -125,7 +126,6 @@ const actions = {
     });
     return state.filtered
   },
-
   sortPlay(sortBy) {
     const sorted = [...state.filtered].sort((a, b) => {
       if (a[sortBy] < b[sortBy]) {
@@ -138,7 +138,6 @@ const actions = {
     });
     return (state.filtered = sorted);
   },
-
   //Media
   async uploadMedia(image, uuid) {
     try {
@@ -148,7 +147,6 @@ const actions = {
       console.log(err.message);
     }
   },
-
   async updateMedia(media, uuid, play_uuid) {
     try {
       const updatedPlay = await ImageService.updateImage(uuid, media);
@@ -161,7 +159,6 @@ const actions = {
       console.log(err.message);
     }
   },
-
   async deleteMedia(uuid, play_uuid) {
     try {
       const updatedPlay = await ImageService.deleteImage(uuid);
@@ -170,6 +167,14 @@ const actions = {
       } else {
         Error("Play not found");
       }
+    } catch (err) {
+      console.log(err.message);
+    }
+  },
+  //Deploy
+  async deploy() {
+    try {
+      return await DeployService.deploy();
     } catch (err) {
       console.log(err.message);
     }

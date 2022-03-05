@@ -36,7 +36,7 @@
           <a href @click.prevent="deletePlay(play)">Delete</a> ] [
           <a href @click.prevent="handleImageUpload" ref="hoveredPlay">
             {{
-              mediaButtonText
+            mediaButtonText
             }}
           </a>
           ]
@@ -57,6 +57,7 @@ export default {
   emits: ["edit", "upload"],
   setup(props, { emit }) {
     const playStore = inject("playStore");
+    const update = inject("update");
     const imageData = inject("imageData");
     const navbar = inject("navbar");
     const hoveredPlay = ref(null);
@@ -123,12 +124,8 @@ export default {
         let formData = new FormData();
         formData.append("file", file);
         formData.append("play_id", props.play.uuid);
-        if (props.play.images?.length) {
-          confirm("Are you sure you want to replace the media?") &&
-            playStore.actions.uploadMedia(formData, props.play.uuid)
-        } else {
-          playStore.actions.uploadMedia(formData, props.play.uuid);
-        }
+        playStore.actions.uploadMedia(formData, props.play.uuid);
+        update();
       }
     }
 

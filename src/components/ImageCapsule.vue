@@ -64,6 +64,9 @@ export default {
       img {
         width: 100%;
       }
+      p {
+        line-height: 120%;
+      }
     }
   }
 }
