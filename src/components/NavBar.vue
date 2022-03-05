@@ -28,9 +28,15 @@
                                                 </div>
                                         </div>
                                 </div>
-                                <div class="logout">
-                                        [
-                                        <a href="#" @click="handleLogout">Logout</a> ]
+                                <div class="logout_publish">
+                                        <div class="publish">
+                                                [
+                                                <a href="#" @click="handlePublish">Publish</a> ]
+                                        </div>
+                                        <div class="logout">
+                                                [
+                                                <a href="#" @click="handleLogout">Logout</a> ]
+                                        </div>
                                 </div>
                         </div>
                         <div class="nav-sort__wrapper">
@@ -47,6 +53,7 @@
                                                         </select>
                                                 </div>
                                         </div>
+
                                         <div class="entry__count">
                                                 <div class="total">Entries: {{ total }}</div>
                                         </div>
@@ -87,12 +94,20 @@ export default {
                         playStore.actions.searchPlay(data.search);
                 }
 
+                const handlePublish = async () => {
+                        if (confirm("Are you sure you want to publish?")) {
+                                console.log('deployed')
+                                await playStore.actions.deploy()
+                        }
+                }
+
                 return {
                         data,
                         onChange,
                         addField,
                         handleLogout,
-                        handleSelect
+                        handleSelect,
+                        handlePublish,
                 }
         }
 }
@@ -180,6 +195,10 @@ nav {
                                                 }
                                         }
                                 }
+                        }
+                        .logout_publish {
+                                display: flex;
+                                gap: 0.5rem;
                         }
                 }
                 .nav-sort__wrapper {
