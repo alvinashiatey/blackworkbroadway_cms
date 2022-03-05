@@ -44,6 +44,7 @@ export default {
                 ModalUploadVue,
                 ImageCapsuleVue,
         },
+
         setup() {
                 playStore.actions.fetchPlays();
                 const router = useRouter();
