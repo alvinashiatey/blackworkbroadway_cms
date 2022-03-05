@@ -13,11 +13,7 @@
 import { onMounted } from "@vue/runtime-core";
 export default {
   name: "ImageCapsule",
-  props: {
-    images: {
-      type: Array,
-    },
-  },
+  props: ["images"],
   setup() {
     const apiURL = import.meta.env.PROD
       ? import.meta.env.VITE_API_URL_PROD

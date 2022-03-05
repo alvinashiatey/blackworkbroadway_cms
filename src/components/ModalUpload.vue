@@ -13,7 +13,7 @@
           <div class="image" v-for="(image, index) in data.images" :key="image.uuid">
             <div class="image__wrapper" ref="imageRef" :data-key="index">
               <div class="delete__button">
-                <p @click="handleDeleteImage(image.uuid)">✖︎</p>
+                <p @click="handleDeleteImage(image.uuid)">✖Delete</p>
               </div>
               <img :src="apiURL + image.path" :alt="image.alttext" />
               <div class="caption">
