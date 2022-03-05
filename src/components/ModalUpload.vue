@@ -277,7 +277,7 @@ export default {
       min-height: 40vh;
       height: 100%;
       background-color: var(--primary-color);
-      filter: saturate(0.5);
+      filter: saturate(0.8);
       &.active-dropzone {
         background-color: var(--primary-color);
         border: 1px dashed var(--black-color);
