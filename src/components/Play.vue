@@ -1,5 +1,12 @@
 <template>
-  <div @drop.prevent="handleDrop" @dragover.prevent class="play">
+  <div
+    @dragenter.prevent="toggleDrag"
+    @dragleave.prevent="toggleDrag"
+    @drop.prevent="handleDrop"
+    @dragover.prevent
+    :class="{ 'drag-over': drag }"
+    class="play"
+  >
     <div class="play__conatiner">
       <div class="play__wrapper">
         <div class="play__title col">
@@ -55,6 +62,10 @@ export default {
     const hoveredPlay = ref(null);
     const mediaButtonText = ref("Upload Media");
     const lessMore = ref("More");
+    const drag = ref(false);
+    const toggleDrag = () => {
+      drag.value = !drag.value;
+    };
     const detail = ref({
       isLong: props.play.detail.length > 250,
       detail: props.play.detail,
@@ -96,6 +107,7 @@ export default {
     };
 
     const handleDrop = (e) => {
+      toggleDrag();
       const imageTypes = [
         "image/png",
         "image/jpg",
@@ -134,12 +146,14 @@ export default {
     });
 
     return {
+      drag,
       detail,
       lessMore,
       hoveredPlay,
       mediaButtonText,
       editPlay,
       handleDrop,
+      toggleDrag,
       deletePlay,
       handleImageUpload,
       handlePlayDetails,
@@ -154,6 +168,10 @@ export default {
   &:hover {
     background-color: var(--primary-color);
     filter: brightness(1.2);
+  }
+  &.drag-over {
+    background-color: var(--black-color);
+    color: var(--primary-color);
   }
   .play__conatiner {
     border-bottom: 1px solid #000;
