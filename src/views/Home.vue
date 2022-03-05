@@ -33,7 +33,7 @@ import NavBarVue from "@/components/NavBar.vue"
 import PlayVue from "@/components/Play.vue";
 import playStore from "@/store/playStore.js";
 import userStore from "@/store/userStore.js";
-import { provide, reactive, onMounted, ref } from 'vue';
+import { provide, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 export default {
@@ -125,10 +125,6 @@ export default {
                                 data.classObject.noFlow = false
                         }
                 }
-
-                onMounted(() => {
-                        console.log(navbar.value.data.sortBy);
-                });
 
                 provide('playStore', playStore);
                 provide('imageData', imageData);

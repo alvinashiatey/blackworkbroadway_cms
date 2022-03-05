@@ -1,5 +1,5 @@
 <template>
-  <div class="play">
+  <div @drop.prevent="handleDrop" @dragover.prevent class="play">
     <div class="play__conatiner">
       <div class="play__wrapper">
         <div class="play__title col">
@@ -15,9 +15,7 @@
         <div class="play__detail col">
           <div class="detail">
             <p>{{ detail.content }}</p>
-            <a v-if="detail.isLong" @click.prevent="handlePlayDetails"
-              >({{ lessMore }})</a
-            >
+            <a v-if="detail.isLong" @click.prevent="handlePlayDetails">({{ lessMore }})</a>
           </div>
           <div class="tags">
             <p v-for="tag in play.tags" :key="tag.uuid">{{ tag.name }}</p>
@@ -29,9 +27,11 @@
           [
           <a href @click.prevent="editPlay(play)">Edit</a> ] [
           <a href @click.prevent="deletePlay(play)">Delete</a> ] [
-          <a href @click.prevent="handleImageUpload" ref="hoveredPlay">{{
-            mediaButtonText
-          }}</a>
+          <a href @click.prevent="handleImageUpload" ref="hoveredPlay">
+            {{
+              mediaButtonText
+            }}
+          </a>
           ]
         </div>
         <div class="state__wrapper" :class="{ published: play.state }">
@@ -95,6 +95,31 @@ export default {
       }
     };
 
+    const handleDrop = (e) => {
+      const imageTypes = [
+        "image/png",
+        "image/jpg",
+        "image/jpeg",
+        "image/gif",
+        "video/mp4",
+        "video/webm",
+        "video/ogg",
+        "video/quicktime",
+      ];
+      const file = e.dataTransfer.files[0];
+      if (file && imageTypes.includes(file.type)) {
+        let formData = new FormData();
+        formData.append("file", file);
+        formData.append("play_id", props.play.uuid);
+        if (props.play.images?.length) {
+          confirm("Are you sure you want to replace the media?") &&
+            playStore.actions.uploadMedia(formData, props.play.uuid)
+        } else {
+          playStore.actions.uploadMedia(formData, props.play.uuid);
+        }
+      }
+    }
+
     onMounted(() => {
       hoveredPlay.value.addEventListener("mouseenter", () => {
         imageData.images = props.play.images;
@@ -114,6 +139,7 @@ export default {
       hoveredPlay,
       mediaButtonText,
       editPlay,
+      handleDrop,
       deletePlay,
       handleImageUpload,
       handlePlayDetails,

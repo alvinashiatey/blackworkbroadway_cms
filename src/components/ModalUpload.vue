@@ -131,7 +131,6 @@ export default {
 
     const handleDragDrop = (e) => {
       toggleActive();
-      console.log("here")
       const file = e.dataTransfer.files[0];
       if (file && imageTypes.includes(file.type)) {
         data.formData = new FormData();
@@ -296,6 +295,8 @@ export default {
       &.notactive {
         min-height: 0 !important;
         height: 100% !important;
+        background-color: none;
+        filter: none;
       }
       // overflow-y: scroll;
       .image {
