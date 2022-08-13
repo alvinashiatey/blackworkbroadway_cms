@@ -16,7 +16,7 @@ class UserService {
         return False;
       }
     } catch (e) {
-      console.log(e.response.data.message);
+      console.log(e.message);
       return False;
     }
   }
