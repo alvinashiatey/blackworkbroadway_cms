@@ -64,6 +64,7 @@ export default {
         images: [],
       },
       editData: {
+        clicked: "",
         item: {},
       },
       classObject: {
@@ -145,6 +146,7 @@ export default {
     }
 
     const handleEdit = (d) => {
+      data.editData.clicked= "edit"
       data.showModal = true;
       data.editData.item = d;
       document.querySelector(".home").scrollTop = 0;
@@ -154,11 +156,12 @@ export default {
     }
 
     const handleAddButton = () => {
+      data.editData.clicked = "add"
       data.editData.item = {};
-      data.showModal = !data.showModal;
+      data.showModal = true;
       data.showUpload = false;
       data.navStore.showAdd = !data.navStore.showAdd;
-      data.navStore.showSort = data.navStore.aboutModal ? (data.navStore.showSort = false) : !data.navStore.showSort;
+      data.navStore.showSort = false;
       data.navStore.aboutModal = false;
       if (data.showModal) {
         document.querySelector(".home").scrollTop = 0;
@@ -166,7 +169,6 @@ export default {
       } else {
         data.classObject.noFlow = false
       }
-      console.log("add")
     }
 
     const handleLogout = () => {

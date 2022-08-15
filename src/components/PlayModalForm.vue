@@ -83,7 +83,7 @@
                 placeholder="DATE, MONTH, YEAR - DATE, MONTH, YEAR"
             />
           </div>
-          <ArtistInput ref="artists" :data="artists"/>
+          <ArtistInput ref="artists" :data="artists" :reset="data.reset"/>
           <div class="form__group">
             <label class="form__label" for="detail">Detail:</label>
             <textarea
@@ -108,7 +108,7 @@
 import ArtistInput from "@/components/ArtistInput.vue";
 import TagsInput from "@/components/TagsInput.vue";
 import EventBus from "@/Common/EventBus";
-import {inject, onBeforeMount} from "@vue/runtime-core";
+import {inject, onBeforeMount, watchEffect} from "@vue/runtime-core";
 import {reactive, ref} from "@vue/reactivity";
 
 export default {
@@ -130,7 +130,11 @@ export default {
       circa: false,
       run: "",
       state: false,
+      clicked: props.data.clicked,
+      reset: false
     });
+
+
 
     data.classObject = {publish: data.state, check__container: true};
 
@@ -143,8 +147,8 @@ export default {
         detail: data.detail,
         state: data.state,
       },
-      artists: artists.value.data.contributors[0].name !== '' ? artists.value.data.contributors : [],
-      tags: tags.value.data.tags,
+      artists: artists.value?.data.contributors[0].name !== '' ? artists.value.data.contributors : [],
+      tags: tags.value?.data.tags,
     });
 
     const submitPlay = async () => {
@@ -207,7 +211,7 @@ export default {
       buttonText.value = "Update";
     };
 
-    const cancel = () => {
+    const clearInput = ()=>{
       data.title = "";
       data.year = "";
       data.circa = false;
@@ -217,6 +221,11 @@ export default {
       artists.value = [];
       tags.value = [];
       buttonText.value = "Submit";
+      data.reset = true;
+    }
+
+    const cancel = () => {
+      clearInput()
       props.data.cancel();
     };
 
@@ -233,12 +242,18 @@ export default {
     };
 
     onBeforeMount(() => {
-      console.log(typeof props.data?.item)
       if (props.data?.item === undefined) return;
-      if (!Object.keys(props.data?.item || {}).length === 0) {
+      if (Object.keys(props.data?.item || {}).length !== 0) {
         setupEdit();
       }
     });
+
+    watchEffect(()=>{
+      data.clicked = props.data.clicked
+      if(data.clicked === "add") {
+        clearInput()
+      }
+    })
 
     return {
       data,
