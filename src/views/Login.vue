@@ -70,8 +70,9 @@ export default {
       }
     }
 
-    onMounted(()=>{
-      userStore.actions.checkLogin().then(res=>{
+    onMounted(async ()=>{
+      await userStore.actions.checkLogin().then(res=>{
+        console.log(res)
         if (res) {
           router.push({name: 'Home'})
         }

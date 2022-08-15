@@ -251,6 +251,7 @@ export default {
   background-color: var(--primary-color);
   width: 100vw;
   height: 100%;
+  overflow-x:hidden ;
   overflow-y: scroll;
   padding-right: 17px; /* Increase/decrease this value for cross-browser compatibility */
   box-sizing: content-box; /* So the width will be 100% + 17px */
@@ -261,7 +262,7 @@ export default {
   }
 
   .home__container {
-    //width: 100vw;
+    width: 100vw;
   }
 }
 </style>
