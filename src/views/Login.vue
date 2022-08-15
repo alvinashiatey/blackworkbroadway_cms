@@ -43,6 +43,7 @@
 import {reactive} from '@vue/reactivity'
 import userStore from "@/store/userStore.js";
 import {useRouter} from 'vue-router';
+import {onMounted} from "@vue/runtime-core";
 
 export default {
   name: "Home",
@@ -67,8 +68,15 @@ export default {
       } catch (e) {
         alert("Invalid credentials")
       }
-
     }
+
+    onMounted(()=>{
+      userStore.actions.checkLogin().then(res=>{
+        if (res) {
+          router.push({name: 'Home'})
+        }
+      })
+    })
 
     return {
       data,
