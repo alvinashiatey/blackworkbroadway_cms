@@ -81,6 +81,7 @@
 <script>
 import { reactive, ref } from "@vue/reactivity";
 import { inject, onMounted } from "@vue/runtime-core";
+import EventBus from "@/Common/EventBus";
 export default {
   name: "ModalUpload",
   props: ["data"],
@@ -157,10 +158,15 @@ export default {
         data.formData.append("alttext", data.alttext);
         data.formData.append("caption", data.caption);
         playStore.actions.uploadMedia(data.formData, data.play_id).then(() => {
+          props.data.save();
           if (!navbar.value.data.sortBy) return;
           playStore.actions.sortPlay(navbar.value.data.sortBy);
-        });
-        props.data.save();
+        }).catch((err)=>{
+          if (err.response && err.response.status === 403) {
+            EventBus.dispatch("logout");
+          }
+        })
+
       }
     };
 

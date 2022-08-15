@@ -1,9 +1,9 @@
 <template>
   <div class="wrapper">
-    <AlertBox :content="data.navStore.alertData"/>
+    <AlertBoxVue :content="data.navStore.alertData"/>
     <NavBarVue :store="data.navStore" ref="navbar"/>
     <div :class="data.classObject">
-      <AboutModal v-if="data.navStore.aboutModal" :data="data.navStore"/>
+      <AboutModalVue v-if="data.navStore.aboutModal" :data="data.navStore"/>
       <ModalFormVue v-if="data.showModal" :data="data.editData"/>
       <ModalUploadVue v-if="data.showUpload" :data="data.uploadData"/>
       <div class="home__container">
@@ -14,6 +14,7 @@
               :key="play.uuid"
               @edit="handleEdit"
               @upload="handleUpload"
+              @delete="handleDelete"
           />
         </div>
         <ImageCapsuleVue
@@ -26,24 +27,24 @@
 </template>
 
 <script>
-import AboutModal from "@/components/AboutModal.vue"
-import ModalFormVue from "@/components/ModalForm.vue";
+import AboutModalVue from "@/components/AboutModal.vue"
+import ModalFormVue from "@/components/PlayModalForm.vue";
 import ModalUploadVue from "@/components/ModalUpload.vue";
 import ImageCapsuleVue from "@/components/ImageCapsule.vue";
 import NavBarVue from "@/components/NavBar.vue"
 import PlayVue from "@/components/Play.vue";
-import AlertBox from "@/components/AlertBox.vue";
+import AlertBoxVue from "@/components/AlertBox.vue";
 import playStore from "@/store/playStore.js";
 import userStore from "@/store/userStore.js";
 import {provide, reactive, ref, watch} from 'vue';
-import {useRouter} from 'vue-router';
+import EventBus from "@/Common/EventBus";
 
 export default {
   components: {
     PlayVue,
-    AlertBox,
+    AlertBoxVue,
     NavBarVue,
-    AboutModal,
+    AboutModalVue,
     ModalFormVue,
     ModalUploadVue,
     ImageCapsuleVue,
@@ -51,7 +52,6 @@ export default {
 
   setup() {
     playStore.actions.fetchPlays();
-    const router = useRouter();
     const navbar = ref(null);
     let data = reactive({
       showModal: false,
@@ -88,14 +88,12 @@ export default {
       }
     });
 
-
     data.editAbout = {
       edit: false,
     }
 
     watch(() => [data.navStore.alertData.show, data.navStore.alertData.message],
         ([show, message]) => {
-      console.log({message, show})
       localStorage.showAlert = show
       localStorage.alert = message
     })
@@ -104,6 +102,8 @@ export default {
       data.classObject.noFlow = false
       data.navStore.alertData.message = "Don't forget to deploy to live site."
       data.navStore.alertData.show = true;
+      data.navStore.showSort = true;
+      data.navStore.showAdd = false;
     }
 
     data.uploadData.save = () => {
@@ -116,6 +116,23 @@ export default {
       save()
     }
 
+    const handleDelete = ()=>{
+      console.log("delete")
+      save()
+    }
+
+    const handleDeploy = async () => {
+      await playStore.actions.deploy()
+    }
+
+    const handleSortBy = (sortBy)=>{
+      return playStore.actions.sortPlay(sortBy)
+    }
+
+    const handleSearch = (entry) =>{
+      return playStore.actions.searchPlay(entry)
+    }
+
     const cancel = () => {
       data.showModal = false;
       data.showUpload = false;
@@ -123,7 +140,6 @@ export default {
       data.navStore.showSort = true;
       data.navStore.aboutModal = false;
       data.navStore.editAbout.edit = false;
-      data.navStore.showAdd = false;
       data.navStore.showAdd = false;
     }
 
@@ -153,7 +169,7 @@ export default {
 
     const handleLogout = () => {
       userStore.actions.logout();
-      router.push({name: "Login"});
+      EventBus.dispatch("logout");
     }
 
     const handleAboutButton = () => {
@@ -189,6 +205,11 @@ export default {
       }
     }
 
+    const handleUsersButton = ()=>{
+      EventBus.dispatch("users");
+    }
+
+
     data.editData.cancel = cancel
     data.navStore.cancel = cancel;
     data.uploadData.cancel = cancel;
@@ -196,6 +217,10 @@ export default {
     data.navStore.handleAddbutton = handleAddButton;
     data.navStore.handleEditAbout = handleEditAbout;
     data.navStore.handleAboutButton = handleAboutButton;
+    data.navStore.handleUsersButton=  handleUsersButton
+    data.navStore.handleSortBy = handleSortBy;
+    data.navStore.handleSearch = handleSearch;
+    data.navStore.handleDeploy = handleDeploy;
 
     provide('playStore', playStore);
     provide('imageData', data.imageData);
@@ -206,6 +231,7 @@ export default {
       playStore,
       handleEdit,
       handleUpload,
+      handleDelete
     };
   }
 };
@@ -235,7 +261,7 @@ export default {
   }
 
   .home__container {
-    width: 100vw;
+    //width: 100vw;
   }
 }
 </style>

@@ -91,13 +91,14 @@ const actions = {
         Error("Play not found");
       }
     } catch (err) {
-      console.log(err.message);
+      console.log(err.message, err);
     }
   },
   async deletePlay(play) {
     try {
       await PlayService.deletePlay(play.uuid);
       methods.deletePlay(play);
+      return true;
     } catch (err) {
       console.log(err.message);
     }

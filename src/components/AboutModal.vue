@@ -43,6 +43,7 @@
         </div>
 </template>
 <script>
+import EventBus from "../common/EventBus";
 import editStore from '@/store/editStore.js'
 import { ref, watchEffect } from "@vue/runtime-core";
 export default {
@@ -110,7 +111,11 @@ export default {
                         if (confirm("Are you sure you want to submit these changes?")) {
                                 props.data.editAbout.edit = false
                                 resetPTag(about.value.children)
-                                editStore.actions?.updateData({ content: about.value.innerHTML })
+                                editStore.actions?.updateData({ content: about.value.innerHTML }).catch((err)=>{
+                                  if (err.response && err.response.status === 403) {
+                                    EventBus.dispatch("logout");
+                                  }
+                                })
                         }
                 }
 

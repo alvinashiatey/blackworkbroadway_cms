@@ -109,9 +109,10 @@ import {reactive, ref} from "@vue/reactivity";
 import ArtistInput from "./ArtistInput.vue";
 import {inject, onBeforeMount} from "@vue/runtime-core";
 import TagsInput from "./TagsInput.vue";
+import EventBus from "@/Common/EventBus";
 
 export default {
-  name: "ModalForm",
+  name: "PlayModalForm",
   components: {
     ArtistInput,
     TagsInput
@@ -151,20 +152,37 @@ export default {
     });
 
     const submitPlay = async () => {
-      let d = sendData();
-      playStore.actions.createPlay(d).then(() => {
-        if (!navbar.value.data.sortBy) return;
-        playStore.actions.sortPlay(navbar.value.data.sortBy)
-      });
+      try{
+        let d = sendData();
+        playStore.actions.createPlay(d).then(() => {
+          if (!navbar.value.data.sortBy) return;
+          playStore.actions.sortPlay(navbar.value.data.sortBy)
+        }).catch((err)=>{
+          if (err.response && err.response.status === 403) {
+            EventBus.dispatch("logout");
+          }
+        })
+      }catch (e){
+        console.log(e.message)
+      }
+
     };
 
     const updatePlay = async () => {
-      let d = sendData();
-      d.play.uuid = props.data.item.uuid;
-      playStore.actions.updatePlay(d, props.data.item.uuid).then(() => {
-        if (!navbar.value.data.sortBy) return;
-        playStore.actions.sortPlay(navbar.value.data.sortBy)
-      });
+      try{
+        let d = sendData();
+        d.play.uuid = props.data.item.uuid;
+        playStore.actions.updatePlay(d, props.data.item.uuid).then(() => {
+          if (!navbar.value.data.sortBy) return;
+          playStore.actions.sortPlay(navbar.value.data.sortBy)
+        }).catch((err)=>{
+          if (err.response && err.response.status === 403) {
+            EventBus.dispatch("logout");
+          }
+        })
+      } catch (e){
+        console.log(e.message)
+      }
     };
 
     const numbersOnly = (e) => {
@@ -209,18 +227,18 @@ export default {
     const handleForm = async () => {
       try {
         if (buttonText.value === "Submit") {
-          await submitPlay();
+          await submitPlay().then(props.data.save);
         } else if (buttonText.value === "Update") {
-          await updatePlay();
+          await updatePlay().then(props.data.save);
         }
-        props.data.save();
       } catch (err) {
         console.log(err.message);
       }
     };
 
     onBeforeMount(() => {
-      if (!props.data.item.isEmpty()) {
+      if (props.data?.item === undefined) return;
+      if (!props.data.item?.isEmpty()) {
         setupEdit();
       }
     });

@@ -1,18 +1,18 @@
-import axios from "axios";
+import api from "./ApiService";
 
 class ImageService {
   async getImages() {
-    let res = await axios.get("/images");
+    let res = await api.get("/images");
     return res.data;
   }
 
   async getImage(id) {
-    let res = await axios.get(`/images/${id}`);
+    let res = await api.get(`/images/${id}`);
     return res.data;
   }
 
   async createImage(image) {
-    let res = await axios.post("/images", image, {
+    let res = await api.post("/images", image, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -21,12 +21,12 @@ class ImageService {
   }
 
   async updateImage(id, image) {
-    let res = await axios.put(`/images/${id}`, image);
+    let res = await api.put(`/images/${id}`, image);
     return res.data;
   }
 
   async deleteImage(id) {
-    let res = await axios.delete(`/images/${id}`);
+    let res = await api.delete(`/images/${id}`);
     return res.data;
   }
 }

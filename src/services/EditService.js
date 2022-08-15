@@ -1,12 +1,12 @@
-import axios from "axios";
+import api from "./ApiService";
 
 class EditService {
         async getAbout(name = "about") {
-                let res = await axios.get("/edit/" + name);
+                let res = await api.get("/edit/" + name);
                 return res.data;
         }
         async updateAbout(data) {
-                let res = await axios.put("/edit/about", data);
+                let res = await api.put("/edit/about", data);
                 return res.data;
         }
 }

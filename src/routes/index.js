@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "@/views/Home.vue";
+import Users from "@/views/Users.vue";
 import Login from "@/views/Login.vue";
 import UserStore from "@/store/userStore.js";
 
@@ -28,6 +29,12 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home,
+    beforeEnter: authenticationGuard,
+  },
+  {
+    path: "/users",
+    name: "Users",
+    component: Users,
     beforeEnter: authenticationGuard,
   },
   {

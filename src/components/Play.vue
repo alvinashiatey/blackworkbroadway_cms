@@ -51,10 +51,11 @@
 
 <script>
 import { inject, onMounted, ref, watchEffect } from "@vue/runtime-core";
+import EventBus from "@/Common/EventBus";
 export default {
   name: "Play",
   props: ["play"],
-  emits: ["edit", "upload"],
+  emits: ["edit", "upload", "delete"],
   setup(props, { emit }) {
     const playStore = inject("playStore");
     const imageData = inject("imageData");
@@ -67,10 +68,11 @@ export default {
       drag.value = !drag.value;
     };
     const detail = ref({
-      isLong: props.play.detail.length > 250,
-      detail: props.play.detail,
-      subDetail: `${props.play.detail.slice(0, 250)} ...`,
+      isLong: props.play?.detail ? props.play?.detail.length > 250 : false,
+      detail: props.play?.detail ? props.play?.detail : "",
+      subDetail: props.play?.detail ? `${props.play?.detail.slice(0, 250) } ...` : "",
     });
+
     watchEffect(() => {
       props.play.images?.length
         ? (mediaButtonText.value = "Edit Media")
@@ -82,12 +84,16 @@ export default {
     };
 
     const deletePlay = (play) => {
-      let del = confirm("Are you sure you want to delete this play?");
-      if (del) {
+      if (confirm("Are you sure you want to delete this play?")) {
+          emit("delete")
         playStore.actions.deletePlay(play).then(() => {
           if (!navbar.value.data.sortBy) return;
           playStore.actions.sortPlay(navbar.value.data.sortBy);
-        });
+        }).catch((err)=>{
+          if (err.response && err.response.status === 403) {
+            EventBus.dispatch("logout");
+          }
+        })
       } else {
         alert("Delete cancelled");
       }

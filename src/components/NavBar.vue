@@ -1,5 +1,5 @@
 <template>
-  <nav>
+  <nav :class="{no__border:visibleContainer}">
     <div class="nav__container">
       <div class="nav__wrapper">
         <div @click="cancelToHome" class="title">
@@ -8,11 +8,11 @@
             <br/>Broadway
           </a>
         </div>
-        <NavButton v-on:menu="handleDropMenu"/>
+        <NavButton @menu="handleDropMenu"/>
       </div>
-      <div class="nav-lower__wrapper">
+      <div class="nav-lower__wrapper" :class="{pad:visibleContainer}">
         <div class="nav-lower__container">
-          <div class="search">
+          <div v-show="store.showSort" class="search" >
             <div class="search__input">
               <input
                   @input="onChange"
@@ -27,7 +27,7 @@
           </div>
         </div>
         <div class="logout_publish">
-          <div class="publish">
+          <div v-show="store.showSort" class="publish">
             [
             <a href="#" @click="handleDeploy">Deploy</a> ]
           </div>
@@ -76,8 +76,8 @@
 <script>
 import NavButton from "./NavButton.vue"
 import EditMenuBar from "./EditMenuBar.vue"
+import {useRoute, useRouter} from 'vue-router';
 import {reactive} from '@vue/reactivity'
-import {inject} from '@vue/runtime-core'
 
 export default {
   name: 'NavBar',
@@ -88,27 +88,44 @@ export default {
     EditMenuBar
   },
   setup(props) {
+    const route = useRoute()
+    const router = useRouter()
     const data = reactive({
       search: "",
       sortBy: null,
       editBar: false,
     })
 
-    const playStore = inject('playStore')
+    const visibleContainer = (route.path !== "/");
 
     const handleDropMenu = (d) => {
-      if (d === "Add Play") {
-        data.editBar = false;
-        props.store.handleAddbutton();
-      } else if (d === "View About") {
-        data.addBar = false;
-        data.editBar = !data.editBar;
-        props.store.handleAboutButton();
+      switch (d) {
+        case "Add Play":
+          data.editBar = false;
+          props.store.handleAddbutton();
+          break;
+        case "View About":
+          data.editBar = !data.editBar;
+          props.store.handleAboutButton();
+          break;
+        case "Users":
+          props.store.handleUsersButton();
+          break;
+        case "Add User":
+          props.store.handleAddUser();
+          break;
+        default:
+          console.log("No Menu Item")
       }
+
     }
 
     const cancelToHome = () => {
-      props.store.cancel()
+      if (route.path !== "/"){
+        router.push({name: "Home"})
+      } else {
+        props.store.cancel()
+      }
       data.editBar = false;
     }
 
@@ -124,23 +141,23 @@ export default {
       if (!data.sortBy) return;
       switch (data.sortBy) {
         case "year ascend":
-          playStore.actions.sortPlay(data.sortBy.split(" ")[0].toLowerCase()).reverse()
+          props.store.handleSortBy(data.sortBy.split(" ")[0].toLowerCase()).reverse()
           break;
         case "title descend":
-          playStore.actions.sortPlay(data.sortBy.split(" ")[0].toLowerCase()).reverse()
+          props.store.handleSortBy(data.sortBy.split(" ")[0].toLowerCase()).reverse()
           break;
         default:
-          playStore.actions.sortPlay(data.sortBy.toLowerCase())
+          props.store.handleSortBy(data.sortBy.toLowerCase())
       }
     }
 
     const onChange = () => {
-      playStore.actions.searchPlay(data.search);
+      props.store.handleSearch(data.search)
     }
 
     const handleDeploy = async () => {
       if (confirm("Are you sure you want to deploy a new build?")) {
-        await playStore.actions.deploy()
+        await props.store.handleDeploy()
         props.store.alertData.show = false
         props.store.alertData.message = ""
       }
@@ -155,14 +172,19 @@ export default {
       cancelToHome,
       handleDeploy,
       handleDropMenu,
+      visibleContainer,
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.no__border{
+  border-bottom: none;
+}
 nav {
   border-bottom: 1px solid #000;
+
 
   .nav__container {
     .nav__wrapper {
@@ -192,6 +214,10 @@ nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
+
+      &.pad{
+        padding-block: 0.6rem;
+      }
 
       .nav-lower__container {
         padding-block: 0.5rem;
