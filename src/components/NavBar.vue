@@ -10,7 +10,7 @@
         </div>
         <NavButton @menu="handleDropMenu"/>
       </div>
-      <div class="nav-lower__wrapper" :class="{pad:visibleContainer}">
+      <div class="nav-lower__wrapper" >
         <div class="nav-lower__container">
           <div v-show="store.showSort" class="search" >
             <div class="search__input">
@@ -96,7 +96,7 @@ export default {
       editBar: false,
     })
 
-    const visibleContainer = (route.path !== "/");
+    const visibleContainer = (route.path !== "/") || !props.store.showSort;
 
     const handleDropMenu = (d) => {
       switch (d) {

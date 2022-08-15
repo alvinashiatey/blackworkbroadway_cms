@@ -135,7 +135,7 @@ export default {
     data.classObject = {publish: data.state, check__container: true};
 
     Object.prototype.isEmpty = function () {
-      return Object.keys(this).length === 0;
+      return Object?.keys(this || {}).length === 0;
     };
 
     const sendData = () => ({

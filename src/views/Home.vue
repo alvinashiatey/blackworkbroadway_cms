@@ -188,6 +188,7 @@ export default {
 
     const handleEditAbout = () => {
       data.navStore.editAbout.edit = !data.navStore.editAbout.edit;
+      data.navStore.showAdd = false;
     }
 
     const handleUpload = (uuid, images) => {
