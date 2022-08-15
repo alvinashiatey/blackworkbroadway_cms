@@ -12,9 +12,6 @@ export default {
 
   setup(){
     const router = useRouter();
-    const users = ()=> {
-      router.push({name: "Users"});
-    }
     const logOut = ()=>{
       router.push({name: "Login"});
       localStorage.removeItem("user");
@@ -24,9 +21,6 @@ export default {
       EventBus.on("logout", ()=>{
         logOut();
       })
-      EventBus.on("users", ()=>{
-        users()
-      })
     })
 
     onBeforeUnmount(()=>{
@@ -35,7 +29,7 @@ export default {
     })
 
     return {
-      logOut
+      logOut,
     }
   }
 

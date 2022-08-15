@@ -4,7 +4,7 @@
     <NavBarVue :store="data.navStore" ref="navbar"/>
     <div :class="data.classObject">
       <AboutModalVue v-if="data.navStore.aboutModal" :data="data.navStore"/>
-      <ModalFormVue v-if="data.showModal" :data="data.editData"/>
+      <PlayModalFormVue v-if="data.showModal" :data="data.editData"/>
       <ModalUploadVue v-if="data.showUpload" :data="data.uploadData"/>
       <div class="home__container">
         <div class="plays">
@@ -28,7 +28,7 @@
 
 <script>
 import AboutModalVue from "@/components/AboutModal.vue"
-import ModalFormVue from "@/components/PlayModalForm.vue";
+import PlayModalFormVue from "@/components/PlayModalForm.vue";
 import ModalUploadVue from "@/components/ModalUpload.vue";
 import ImageCapsuleVue from "@/components/ImageCapsule.vue";
 import NavBarVue from "@/components/NavBar.vue"
@@ -40,12 +40,13 @@ import {provide, reactive, ref, watch} from 'vue';
 import EventBus from "@/Common/EventBus";
 
 export default {
+  name: "Home",
   components: {
     PlayVue,
     AlertBoxVue,
     NavBarVue,
     AboutModalVue,
-    ModalFormVue,
+    PlayModalFormVue,
     ModalUploadVue,
     ImageCapsuleVue,
   },
@@ -156,7 +157,7 @@ export default {
       data.editData.item = {};
       data.showModal = !data.showModal;
       data.showUpload = false;
-      data.navStore.showAdd = true;
+      data.navStore.showAdd = !data.navStore.showAdd;
       data.navStore.showSort = data.navStore.aboutModal ? (data.navStore.showSort = false) : !data.navStore.showSort;
       data.navStore.aboutModal = false;
       if (data.showModal) {
@@ -165,6 +166,7 @@ export default {
       } else {
         data.classObject.noFlow = false
       }
+      console.log("add")
     }
 
     const handleLogout = () => {
@@ -208,6 +210,7 @@ export default {
 
     const handleUsersButton = ()=>{
       EventBus.dispatch("users");
+      // console.log("here")
     }
 
 

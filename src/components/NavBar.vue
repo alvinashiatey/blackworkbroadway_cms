@@ -10,9 +10,9 @@
         </div>
         <NavButton @menu="handleDropMenu"/>
       </div>
-      <div class="nav-lower__wrapper" >
+      <div class="nav-lower__wrapper">
         <div class="nav-lower__container">
-          <div v-show="store.showSort" class="search" >
+          <div v-show="store.showSort" class="search">
             <div class="search__input">
               <input
                   @input="onChange"
@@ -30,6 +30,10 @@
           <div v-show="store.showSort" class="publish">
             [
             <a href="#" @click="handleDeploy">Deploy</a> ]
+          </div>
+          <div v-if="isAdmin" class="users">
+            [
+            <RouterLink to="/users">Users</RouterLink> ]
           </div>
           <div class="logout">
             [
@@ -88,6 +92,8 @@ export default {
     EditMenuBar
   },
   setup(props) {
+    const user = JSON.parse(localStorage.getItem("user"))
+    let isAdmin = (user.role === 1)
     const route = useRoute()
     const router = useRouter()
     const data = reactive({
@@ -108,9 +114,6 @@ export default {
           data.editBar = !data.editBar;
           props.store.handleAboutButton();
           break;
-        case "Users":
-          props.store.handleUsersButton();
-          break;
         case "Add User":
           props.store.handleAddUser();
           break;
@@ -121,7 +124,7 @@ export default {
     }
 
     const cancelToHome = () => {
-      if (route.path !== "/"){
+      if (route.path !== "/") {
         router.push({name: "Home"})
       } else {
         props.store.cancel()
@@ -165,6 +168,7 @@ export default {
 
     return {
       data,
+      isAdmin,
       onChange,
       handleEdit,
       handleSelect,
@@ -179,9 +183,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.no__border{
+.no__border {
   border-bottom: none;
 }
+
 nav {
   border-bottom: 1px solid #000;
 
@@ -215,7 +220,7 @@ nav {
       justify-content: space-between;
       align-items: center;
 
-      &.pad{
+      &.pad {
         padding-block: 0.6rem;
       }
 

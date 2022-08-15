@@ -30,7 +30,7 @@ export default {
       if (!localStorage.getItem("user")) return;
       let user = JSON.parse(localStorage.getItem("user"))
       if (user.role === 1) {
-        (route.path === "/") ? data.menuItems = [...data.menuItems, "View About", "Users"] :
+        (route.path === "/") ? data.menuItems = [...data.menuItems, "View About"] :
             data.menuItems = ["Add User",]
       }
     })

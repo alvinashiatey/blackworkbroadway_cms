@@ -27,7 +27,7 @@ import {reactive} from 'vue';
 
 
 export default {
-  name: "Users.vue",
+  name: "Users",
   components: {
     UserModalFormVue,
     NavBarVue,

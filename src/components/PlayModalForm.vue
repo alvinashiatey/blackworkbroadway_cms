@@ -134,10 +134,6 @@ export default {
 
     data.classObject = {publish: data.state, check__container: true};
 
-    Object.prototype.isEmpty = function () {
-      return Object?.keys(this || {}).length === 0;
-    };
-
     const sendData = () => ({
       play: {
         title: data.title,
@@ -237,8 +233,9 @@ export default {
     };
 
     onBeforeMount(() => {
+      console.log(typeof props.data?.item)
       if (props.data?.item === undefined) return;
-      if (!props.data.item?.isEmpty()) {
+      if (!Object.keys(props.data?.item || {}).length === 0) {
         setupEdit();
       }
     });

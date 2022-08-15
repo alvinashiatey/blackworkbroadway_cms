@@ -46,7 +46,7 @@ import {useRouter} from 'vue-router';
 import {onMounted} from "@vue/runtime-core";
 
 export default {
-  name: "Home",
+  name: "Login",
   setup() {
     const router = useRouter();
     let data = reactive({
