@@ -105,11 +105,11 @@
 </template>
 
 <script>
-import {reactive, ref} from "@vue/reactivity";
-import ArtistInput from "./ArtistInput.vue";
-import {inject, onBeforeMount} from "@vue/runtime-core";
-import TagsInput from "./TagsInput.vue";
+import ArtistInput from "@/components/ArtistInput.vue";
+import TagsInput from "@/components/TagsInput.vue";
 import EventBus from "@/Common/EventBus";
+import {inject, onBeforeMount} from "@vue/runtime-core";
+import {reactive, ref} from "@vue/reactivity";
 
 export default {
   name: "PlayModalForm",

@@ -41,7 +41,7 @@
 
 <script>
 import {reactive} from '@vue/reactivity'
-import userStore from "../store/userStore.js";
+import userStore from "@/store/userStore.js";
 import {useRouter} from 'vue-router';
 
 export default {

@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { reactive, ref } from '@vue/reactivity'
+import { reactive } from '@vue/reactivity'
 import { onBeforeMount } from '@vue/runtime-core';
 export default {
         props: ["data"],

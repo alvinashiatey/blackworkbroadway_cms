@@ -8,7 +8,7 @@
 </template>
 <script>
 import {reactive} from 'vue'
-import DropMenu from './DropMenu.vue'
+import DropMenu from '@/components/DropMenu.vue'
 import {useRoute} from 'vue-router';
 import {onMounted} from "@vue/runtime-core";
 

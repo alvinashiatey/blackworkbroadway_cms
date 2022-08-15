@@ -74,8 +74,8 @@
 </template>
 
 <script>
-import NavButton from "./NavButton.vue"
-import EditMenuBar from "./EditMenuBar.vue"
+import NavButton from "@/components/NavButton.vue"
+import EditMenuBar from "@/components/EditMenuBar.vue"
 import {useRoute, useRouter} from 'vue-router';
 import {reactive} from '@vue/reactivity'
 

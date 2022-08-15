@@ -21,7 +21,7 @@
 import UserModalFormVue from "@/components/UserModalForm.vue";
 import NavBarVue from "@/components/NavBar.vue"
 import UserVue from "@/components/User.vue";
-import userStore from "../store/userStore.js";
+import userStore from "@/store/userStore.js";
 import EventBus from "@/Common/EventBus";
 import {reactive} from 'vue';
 

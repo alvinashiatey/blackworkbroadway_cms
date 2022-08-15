@@ -43,7 +43,7 @@
         </div>
 </template>
 <script>
-import EventBus from "../common/EventBus";
+import EventBus from "@/Common/EventBus.js";
 import editStore from '@/store/editStore.js'
 import { ref, watchEffect } from "@vue/runtime-core";
 export default {
