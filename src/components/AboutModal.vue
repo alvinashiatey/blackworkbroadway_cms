@@ -111,7 +111,11 @@ export default {
                         if (confirm("Are you sure you want to submit these changes?")) {
                                 props.data.editAbout.edit = false
                                 resetPTag(about.value.children)
-                                editStore.actions?.updateData({ content: about.value.innerHTML }).catch((err)=>{
+                                const data = {
+                                  role: JSON.parse(localStorage?.user).role === 1 ? "admin" : "reader",
+                                  content: about.value.innerHTML
+                                }
+                                editStore.actions?.updateData(data).catch((err)=>{
                                   if (err.response && err.response.status === 403) {
                                     EventBus.dispatch("logout");
                                   }
