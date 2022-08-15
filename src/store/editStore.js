@@ -15,7 +15,7 @@ const methods = {
 const actions = {
         async fetchData() {
                 EditService.getAbout().then((res) => {
-                        methods.setData(res.about, "about");
+                        methods.setData(res.about.rendered, "about");
                 });
         },
         async updateData(data) {
