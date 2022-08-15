@@ -1,14 +1,14 @@
 <template>
   <nav :class="{no__border:visibleContainer}">
     <div class="nav__container">
-      <div class="nav__wrapper">
+      <div @mouseleave="handleMouseLeave" class="nav__wrapper">
         <div @click="cancelToHome" class="title">
           <a class="brand-logo">
             Black Work
             <br/>Broadway
           </a>
         </div>
-        <NavButton @menu="handleDropMenu"/>
+        <NavButton @menu="handleDropMenu" ref="navButton"/>
       </div>
       <div class="nav-lower__wrapper">
         <div class="nav-lower__container">
@@ -81,7 +81,7 @@
 import NavButton from "@/components/NavButton.vue"
 import EditMenuBar from "@/components/EditMenuBar.vue"
 import {useRoute, useRouter} from 'vue-router';
-import {reactive} from '@vue/reactivity'
+import {reactive, ref} from '@vue/reactivity'
 
 export default {
   name: 'NavBar',
@@ -96,6 +96,7 @@ export default {
     let isAdmin = (user.role === 1)
     const route = useRoute()
     const router = useRouter()
+    const navButton = ref(null)
     const data = reactive({
       search: "",
       sortBy: null,
@@ -166,9 +167,14 @@ export default {
       }
     }
 
+    const handleMouseLeave = ()=>{
+      navButton.value.handleMouseLeave()
+    }
+
     return {
       data,
       isAdmin,
+      navButton,
       onChange,
       handleEdit,
       handleSelect,
@@ -176,6 +182,7 @@ export default {
       cancelToHome,
       handleDeploy,
       handleDropMenu,
+      handleMouseLeave,
       visibleContainer,
     }
   }

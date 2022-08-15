@@ -45,9 +45,14 @@ export default {
       emit('menu', d)
     }
 
+    const handleMouseLeave = ()=>{
+      data.state = false
+    }
+
     return {
       showMenu,
       handleClick,
+      handleMouseLeave,
       data
     }
   }
