@@ -27,7 +27,7 @@ class UserService {
         if (isLoggedIn) {
             try {
                 const response = await api.get(
-                    `/users/${TokenService.getUser().id}`
+                    `/users/${TokenService.getUser().user}`
                 );
                 if (response.data.status === "success") {
                     return true;

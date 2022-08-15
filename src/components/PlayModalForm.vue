@@ -217,7 +217,7 @@ export default {
       data.circa = false;
       data.run = "";
       data.detail = "";
-      data.state = "draft";
+      data.state = false;
       artists.value = [];
       tags.value = [];
       buttonText.value = "Submit";

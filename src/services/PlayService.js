@@ -11,6 +11,7 @@ class PlayService {
   }
   async createPlay(play) {
     let res = await api.post("/plays", play);
+    console.log(res)
     return res.data;
   }
   async updatePlay(id, play) {
