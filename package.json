@@ -17,6 +17,7 @@
     "@rollup/plugin-node-resolve": "^13.3.0",
     "@vitejs/plugin-vue": "^3.0.3",
     "@vue/cli-plugin-router": "^5.0.8",
+    "markdown-it": "^13.0.1",
     "sass": "^1.54.4",
     "vite": "^3.0.7"
   }
