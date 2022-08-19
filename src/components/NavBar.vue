@@ -4,8 +4,10 @@
       <div @mouseleave="handleMouseLeave" class="nav__wrapper">
         <div @click="cancelToHome" class="title">
           <a class="brand-logo">
+            <h1>
             Black Work
             <br/>Broadway
+            </h1>
           </a>
         </div>
         <NavButton @menu="handleDropMenu" ref="navButton"/>
@@ -211,11 +213,13 @@ nav {
         cursor: pointer;
 
         .brand-logo {
-          font-size: 2em;
-          font-weight: bold;
-          text-transform: uppercase;
-          line-height: 0.875em;
-          font-size: 2.5rem;
+          h1 {
+            text-transform: uppercase;
+            font-weight: 900;
+            font-size: 2.25em;
+            line-height: 0.875em;
+            padding: 0;
+          }
         }
       }
     }
