@@ -16,11 +16,13 @@ const actions = {
         async fetchData() {
                 EditService.getAbout().then((res) => {
                         methods.setData(res.about.rendered, "about");
+                        methods.setData(res.about.md, "about_md");
                 });
         },
         async updateData(data) {
                 EditService.updateAbout(data).then((res) => {
                         methods.setData(data.content, "about");
+                        methods.setData(data.md, "about_md");
                 });
         }
 }

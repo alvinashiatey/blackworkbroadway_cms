@@ -81,7 +81,18 @@ export default {
       }
     }
 
+    const getMarkdown = (tags)=>{
+      let res = ""
+      for (const pTag in tags) {
+        if (tags[pTag].tagName === "P") {
+          res += `${tags[pTag].textContent}\n`
+        }
+      }
+      return res
+    }
+
     const setPTag = (tags) => {
+      const md = editStore.state['about_md'].split(/\n/).filter(element => element)
       for (const pTag in tags) {
         if (tags[pTag].tagName === "P") {
           tags[pTag].setAttribute("data-number", counter.value);
@@ -89,6 +100,7 @@ export default {
           tags[pTag].contentEditable = "true"
           tags[pTag].addEventListener("click", listener)
           tags[pTag].spellcheck = true
+          tags[pTag].textContent = md[counter.value]
           counter.value++
         }
       }
@@ -125,13 +137,15 @@ export default {
     }
 
     const handleSubmit = () => {
-      convertToHTML(about.value.children)
       if (confirm("Are you sure you want to submit these changes?")) {
+        const md = getMarkdown(about.value.children)
+        convertToHTML(about.value.children)
         props.data.editAbout.edit = false
         resetPTag(about.value.children)
         const data = {
           role: JSON.parse(localStorage?.user).role === 1 ? "admin" : "reader",
-          content: about.value.innerHTML
+          content: about.value.innerHTML,
+          md
         }
         editStore.actions?.updateData(data).catch((err) => {
           if (err.response && err.response.status === 403) {
